@@ -21,7 +21,7 @@ function BooksPage() {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/textbooks/categories'
+        'https://diplom-backend-mh1r.onrender.com/textbooks/categories'
       );
       setCategories(response.data);
     } catch (error) {
@@ -31,7 +31,9 @@ function BooksPage() {
 
   const fetchTextbooks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/textbooks/books');
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/textbooks/books'
+      );
       setTextbooks(response.data);
     } catch (error) {
       console.error(error);
@@ -46,9 +48,12 @@ function BooksPage() {
   const fetchUserId = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.get('http://localhost:5000/user/profile', {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/user/profile',
+        {
+          headers: { Authorization: token },
+        }
+      );
       return response.data._id;
     } catch (error) {
       console.error(error);
@@ -80,7 +85,7 @@ function BooksPage() {
       }
 
       const response = await axios.get(
-        `http://localhost:5000/user/progress/${userId}/${textbookId}`,
+        `https://diplom-backend-mh1r.onrender.com/user/progress/${userId}/${textbookId}`,
         {
           headers: { Authorization: token },
         }
@@ -102,7 +107,7 @@ function BooksPage() {
       <div key={category._id}>
         <div className="books_name_row">
           <img
-            src={`http://localhost:5000/${category.image}`}
+            src={`https://diplom-backend-mh1r.onrender.com/${category.image}`}
             alt=""
             className="books_img"
           />
@@ -118,7 +123,7 @@ function BooksPage() {
                   <p className="books_block_desc">{book.description}</p>
                 </div>
                 <img
-                  src={`http://localhost:5000/${book.avatar}`}
+                  src={`https://diplom-backend-mh1r.onrender.com/${book.avatar}`}
                   alt=""
                   className="books_block_img"
                 />
@@ -168,7 +173,7 @@ function BooksPage() {
       }
 
       const response = await axios.post(
-        'http://localhost:5000/user/progress',
+        'https://diplom-backend-mh1r.onrender.com/user/progress',
         {
           user: userId,
           textbook: textbookId,

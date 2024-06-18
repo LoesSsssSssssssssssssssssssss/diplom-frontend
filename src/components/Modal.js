@@ -80,12 +80,15 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/user/register', {
-        username,
-        password,
-        email,
-        role: 'user',
-      });
+      const response = await axios.post(
+        'https://diplom-backend-mh1r.onrender.com/user/register',
+        {
+          username,
+          password,
+          email,
+          role: 'user',
+        }
+      );
       setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response.data.error);
@@ -94,10 +97,13 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
 
   const login = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/user/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'https://diplom-backend-mh1r.onrender.com/user/login',
+        {
+          email,
+          password,
+        }
+      );
       setMessage(`Logged in! Token: ${response.data.token}`);
       const token = response.data.token;
       const name = response.data.username;
