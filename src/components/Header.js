@@ -78,6 +78,9 @@ const Header = () => {
             <Link to="/bookspage" className="header_a">
               Учебники
             </Link>
+            <Link to="/admin" className="header_a">
+              Админ панель
+            </Link>
           </div>
 
           {checkedAuthStatus && (
