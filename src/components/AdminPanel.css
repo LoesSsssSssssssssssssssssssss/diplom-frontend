@@ -1,0 +1,414 @@
+/* Подключение шрифтов */
+@font-face {
+  font-family: 'OpenSans regular';
+  src: url('../../public/fonts/opensans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans semiBold';
+  src: url('../../public/fonts/opensans/OpenSans-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans bold';
+  src: url('../../public/fonts/opensans/OpenSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Manrope regular';
+  src: url('../../public/fonts/manrope/static/Manrope-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Manrope bold';
+  src: url('../../public/fonts/manrope/static/Manrope-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'PTSans';
+  src: url('../../public/fonts/ptsans/PTS55F.ttf');
+}
+
+@font-face {
+  font-family: 'PTSans bold';
+  src: url('../../public/fonts/ptsans/PTS55F.ttf');
+}
+
+.book_page_wrapper {
+  width: 1200px;
+  margin: auto;
+  font-family: 'OpenSans regular', sans-serif;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.login-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  width: 300px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'OpenSans semiBold', sans-serif;
+}
+
+.message {
+  margin-top: 10px;
+  color: red;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'OpenSans semiBold', sans-serif;
+}
+
+h3 {
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'OpenSans semiBold', sans-serif;
+}
+
+label {
+  font-family: 'OpenSans semiBold', sans-serif;
+}
+
+.limited-textarea {
+  width: 100%;
+  max-width: 100%;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+form input[type='text'],
+form input[type='file'],
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: 'Manrope bold', sans-serif;
+}
+
+form button:hover {
+  background: #0056b3;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.li_users {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  height: auto;
+}
+
+.li_users div {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.user_info {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.users_list_ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 2%;
+}
+
+.li_users select {
+  width: auto;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.li_users button {
+  padding: 5px 10px;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.li_users button:hover {
+  background: #c82333;
+}
+
+.edit-topic-section {
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.edit-topic-input,
+.edit-topic-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.edit-topic-textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.message {
+  text-align: center;
+  color: green;
+  margin-top: 20px;
+}
+
+.book_li {
+  width: 32%;
+  height: fit-content;
+  list-style: none;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.book_block button.delete-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.book_block button.delete-button:hover {
+  background-color: #c82333;
+}
+
+.edit-button {
+  font-size: 20px;
+  background-color: white !important;
+  color: #0056b3 !important;
+  padding: 0px !important;
+}
+
+.delete-topic-button {
+  font-size: 24px;
+  background-color: white !important;
+  color: #0056b3 !important;
+  padding: 0px !important;
+}
+
+.book_block {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-button-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.books-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+}
+
+.book_block strong {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.book_block div {
+  margin-bottom: 10px;
+}
+
+.book_block img {
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+
+.book_block button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.book_block button:hover {
+  background-color: #0056b3;
+}
+
+.book_block form {
+  margin-top: 10px;
+}
+
+.book_block form div {
+  margin-bottom: 10px;
+}
+
+.book_block form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.book_block form input[type='text'],
+.book_block form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.book_block form button[type='submit'] {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.book_block form button[type='submit']:hover {
+  background-color: #218838;
+}
+
+.book_block ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.book_block ol {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.book_block ol li a:hover {
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+.book_block ul li {
+  margin-bottom: 5px;
+}
+
+.book_block ul li a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.book_block ul li a:hover {
+  color: #007bff;
+}
+
+.react-tabs__tab-list {
+  width: 100%;
+}
+
+.react-tabs {
+  width: 100%;
+  margin-bottom: 10%;
+  margin-top: 3%;
+}
