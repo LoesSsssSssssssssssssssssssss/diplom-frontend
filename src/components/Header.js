@@ -8,8 +8,9 @@ const Header = () => {
   const [loggedInUsername, setLoggedInUsername] = useState('');
   const [checkedAuthStatus, setCheckedAuthStatus] = useState(false);
   const [avatar, setAvatar] = useState('');
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const token = localStorage.getItem('token');
 
   const checkUserRole = useCallback(async () => {
     try {
