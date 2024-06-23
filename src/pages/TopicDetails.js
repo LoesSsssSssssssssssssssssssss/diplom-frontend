@@ -20,9 +20,12 @@ function TopicDetails() {
   const fetchUserId = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/user/profile', {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/user/profile',
+        {
+          headers: { Authorization: token },
+        }
+      );
       const userId = response.data._id;
       setUserId(userId);
     } catch (error) {
@@ -33,7 +36,7 @@ function TopicDetails() {
   const fetchTextbook = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/textbooks/books/${textbookId}`
+        `https://diplom-backend-mh1r.onrender.com/textbooks/books/${textbookId}`
       );
       setTextbooks(response.data);
     } catch (error) {
@@ -48,7 +51,7 @@ function TopicDetails() {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/textbooks/books/${textbookId}/topics/${topicIndex}`
+        `https://diplom-backend-mh1r.onrender.com/textbooks/books/${textbookId}/topics/${topicIndex}`
       );
       setTopic(response.data);
     } catch (error) {
@@ -66,7 +69,7 @@ function TopicDetails() {
       const token = localStorage.getItem('token');
       const topicId = topic._id;
       await axios.post(
-        `http://localhost:5000/user/increaseProgress/${userId}/${textbookId}`,
+        `https://diplom-backend-mh1r.onrender.com/user/increaseProgress/${userId}/${textbookId}`,
         {
           userId,
           textbookId,

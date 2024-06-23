@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
       if (textbookId) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/textbooks/books/${textbookId}`
+            `https://diplom-backend-mh1r.onrender.com/textbooks/books/${textbookId}`
           );
           setTextbookTitle(response.data.title);
         } catch (error) {
@@ -27,7 +27,7 @@ const Breadcrumbs = () => {
       if (textbookId && topicIndex !== undefined) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/textbooks/books/${textbookId}/topics/${topicIndex}`
+            `https://diplom-backend-mh1r.onrender.com/textbooks/books/${textbookId}/topics/${topicIndex}`
           );
           setTopicTitle(response.data.title);
         } catch (error) {

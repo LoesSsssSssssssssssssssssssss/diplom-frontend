@@ -17,7 +17,7 @@ function BooksPage() {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/textbooks/categories'
+        'https://diplom-backend-mh1r.onrender.com/textbooks/categories'
       );
       setCategories(response.data);
     } catch (error) {
@@ -27,7 +27,9 @@ function BooksPage() {
 
   const fetchTextbooks = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:5000/textbooks/books');
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/textbooks/books'
+      );
       setTextbooks(response.data);
     } catch (error) {
       console.error('Error fetching textbooks:', error);
@@ -49,9 +51,12 @@ function BooksPage() {
     const token = localStorage.getItem('token');
     if (!token) return null;
     try {
-      const response = await axios.get('http://localhost:5000/user/profile', {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/user/profile',
+        {
+          headers: { Authorization: token },
+        }
+      );
       return response.data._id;
     } catch (error) {
       console.error('Error fetching user ID:', error);
@@ -64,7 +69,7 @@ function BooksPage() {
     if (!token) return false;
     try {
       const response = await axios.get(
-        `http://localhost:5000/user/progress/${userId}/${textbookId}`,
+        `https://diplom-backend-mh1r.onrender.com/user/progress/${userId}/${textbookId}`,
         {
           headers: { Authorization: token },
         }
@@ -97,7 +102,7 @@ function BooksPage() {
     const promises = textbooks.map(async (textbook) => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/count/${textbook._id}`
+          `https://diplom-backend-mh1r.onrender.com/user/count/${textbook._id}`
         );
         setUserCounts((prevCounts) => ({
           ...prevCounts,
@@ -134,7 +139,7 @@ function BooksPage() {
         const userId = await fetchUserId();
         if (!userId) throw new Error('Failed to get user ID');
         const response = await axios.post(
-          'http://localhost:5000/user/progress',
+          'https://diplom-backend-mh1r.onrender.com/user/progress',
           { user: userId, textbook: textbookId },
           { headers: { Authorization: token } }
         );
@@ -155,7 +160,7 @@ function BooksPage() {
     const fetchRating = async (textbookId) => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/rating/${textbookId}`
+          `https://diplom-backend-mh1r.onrender.com/user/rating/${textbookId}`
         );
         const averageRating = parseFloat(response.data.averageRating);
         setAverageRatings((prevRatings) => ({
@@ -177,7 +182,7 @@ function BooksPage() {
       <div key={category._id}>
         <div className="books_name_row">
           <img
-            src={`http://localhost:5000/${category.image}`}
+            src={`https://diplom-backend-mh1r.onrender.com/${category.image}`}
             alt=""
             className="books_img"
           />
@@ -193,7 +198,7 @@ function BooksPage() {
                   <p className="books_block_desc">{book.description}</p>
                 </div>
                 <img
-                  src={`http://localhost:5000/${book.avatar}`}
+                  src={`https://diplom-backend-mh1r.onrender.com/${book.avatar}`}
                   alt=""
                   className="books_block_img"
                 />

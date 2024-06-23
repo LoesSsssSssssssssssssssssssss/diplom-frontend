@@ -12,7 +12,7 @@ const UserInfo = React.memo(({ loggedInUsername, avatar, logout }) => (
     {avatar ? (
       <Link to="/profile">
         <img
-          src={`http://localhost:5000/${avatar}`}
+          src={`https://diplom-backend-mh1r.onrender.com/${avatar}`}
           alt="Avatar"
           className="user_avatar"
         />
@@ -89,7 +89,9 @@ function MainPage() {
 
   const fetchUsername = useCallback(async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/user/${userId}`);
+      const response = await axios.get(
+        `https://diplom-backend-mh1r.onrender.com/user/${userId}`
+      );
       setLoggedInUsername(response.data.username);
       setAvatar(response.data.avatar || '');
     } catch (error) {

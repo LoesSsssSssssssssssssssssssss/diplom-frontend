@@ -9,7 +9,7 @@ const StarRating = ({ textbookId }) => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(
-          `http://localhost:5000/user/userRating/${textbookId}`,
+          `https://diplom-backend-mh1r.onrender.com/user/userRating/${textbookId}`,
           { headers: { Authorization: token } }
         );
         const data = response.data;
@@ -27,7 +27,7 @@ const StarRating = ({ textbookId }) => {
     const token = localStorage.getItem('token');
     try {
       await axios.post(
-        'http://localhost:5000/user/rate',
+        'https://diplom-backend-mh1r.onrender.com/user/rate',
         { textbookId, rating: newRating },
         { headers: { Authorization: token } }
       );

@@ -35,7 +35,7 @@ function AdminPanel() {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/textbooks/categories'
+        'https://diplom-backend-mh1r.onrender.com/textbooks/categories'
       );
       setCategories(response.data);
     } catch (error) {
@@ -45,11 +45,14 @@ function AdminPanel() {
 
   const fetchUsers = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:5000/admin/users', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/admin/users',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setUsers(response.data);
     } catch (error) {
       console.error(error);
@@ -59,7 +62,7 @@ function AdminPanel() {
   const checkUserRole = useCallback(async () => {
     try {
       const response = await axios.get(
-        'http://localhost:5000/admin/check-role',
+        'https://diplom-backend-mh1r.onrender.com/admin/check-role',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,10 +86,13 @@ function AdminPanel() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/admin/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'https://diplom-backend-mh1r.onrender.com/admin/login',
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem('token', response.data.token);
       setToken(response.data.token);
       setMessage('Login successful');
@@ -112,7 +118,7 @@ function AdminPanel() {
       formData.append('image', categoryImage);
 
       const response = await axios.post(
-        'http://localhost:5000/admin/categories',
+        'https://diplom-backend-mh1r.onrender.com/admin/categories',
         formData,
         {
           headers: {
@@ -134,7 +140,7 @@ function AdminPanel() {
   const handleChangeRole = async (id, newRole) => {
     try {
       await axios.put(
-        `http://localhost:5000/admin/users/${id}`,
+        `https://diplom-backend-mh1r.onrender.com/admin/users/${id}`,
         { role: newRole },
         {
           headers: {
@@ -150,11 +156,14 @@ function AdminPanel() {
 
   const handleDeleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/admin/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://diplom-backend-mh1r.onrender.com/admin/users/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       fetchUsers();
     } catch (error) {
       console.error(error);
@@ -165,7 +174,7 @@ function AdminPanel() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:5000/admin/add',
+        'https://diplom-backend-mh1r.onrender.com/admin/add',
         {
           title: titlebook,
           description: description,
@@ -193,7 +202,9 @@ function AdminPanel() {
 
   const fetchTextbooks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/admin/books');
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/admin/books'
+      );
       setTextbooks(response.data);
 
       const newTopicInputs = {};
@@ -216,11 +227,14 @@ function AdminPanel() {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/admin/books/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://diplom-backend-mh1r.onrender.com/admin/books/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       fetchTextbooks();
     } catch (error) {
       console.error(error);
@@ -233,7 +247,7 @@ function AdminPanel() {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/admin/${textbookId}/topics`,
+        `https://diplom-backend-mh1r.onrender.com/admin/${textbookId}/topics`,
         { title, content },
         {
           headers: {
@@ -283,7 +297,7 @@ function AdminPanel() {
 
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://localhost:5000/admin/books/${textbookId}/avatar`,
+        `https://diplom-backend-mh1r.onrender.com/admin/books/${textbookId}/avatar`,
         formData,
         {
           headers: {
@@ -344,7 +358,7 @@ function AdminPanel() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:5000/admin/books/${textbookId}/topics/${topicId}`,
+        `https://diplom-backend-mh1r.onrender.com/admin/books/${textbookId}/topics/${topicId}`,
         { title, content },
         {
           headers: {
@@ -375,7 +389,7 @@ function AdminPanel() {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(
-        `http://localhost:5000/admin/books/${textbookId}/topics/${topicId}`,
+        `https://diplom-backend-mh1r.onrender.com/admin/books/${textbookId}/topics/${topicId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -423,7 +437,7 @@ function AdminPanel() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:5000/admin/books/${source.droppableId}/topics/reorder`,
+        `https://diplom-backend-mh1r.onrender.com/admin/books/${source.droppableId}/topics/reorder`,
         {
           topics: updatedTextbooks.find(
             (textbook) => textbook._id === source.droppableId
@@ -459,7 +473,7 @@ function AdminPanel() {
       const { isVisible } = textbookToUpdate;
       const newVisibility = !isVisible;
 
-      const url = `http://localhost:5000/admin/books/${textbookId}/visibility`;
+      const url = `https://diplom-backend-mh1r.onrender.com/admin/books/${textbookId}/visibility`;
       await axios.patch(
         url,
         { isVisible: newVisibility },
@@ -631,7 +645,7 @@ function AdminPanel() {
                             <div>{textbook.description}</div>
                             {textbook.avatar && (
                               <img
-                                src={`http://localhost:5000/${textbook.avatar}`}
+                                src={`https://diplom-backend-mh1r.onrender.com/${textbook.avatar}`}
                                 alt={textbook.title}
                                 style={{ width: '170px', height: '170px' }}
                               />

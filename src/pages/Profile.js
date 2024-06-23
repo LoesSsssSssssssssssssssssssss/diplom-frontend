@@ -19,9 +19,12 @@ const Profile = () => {
   const fetchUserProfile = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/user/profile', {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/user/profile',
+        {
+          headers: { Authorization: token },
+        }
+      );
       setUser(response.data);
     } catch (error) {
       setError('Failed to fetch user profile');
@@ -31,9 +34,12 @@ const Profile = () => {
   const fetchBooks = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/user/books', {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/user/books',
+        {
+          headers: { Authorization: token },
+        }
+      );
       setActiveBooks(response.data.activeBooks);
       setCompletedBooks(response.data.completedBooks);
     } catch (error) {
@@ -71,7 +77,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        'http://localhost:5000/user/profile',
+        'https://diplom-backend-mh1r.onrender.com/user/profile',
         {
           username: newUsername,
           email: newEmail,
@@ -91,12 +97,16 @@ const Profile = () => {
   const uploadAvatar = async (formData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/user/avatar', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: token,
-        },
-      });
+      await axios.post(
+        'https://diplom-backend-mh1r.onrender.com/user/avatar',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: token,
+          },
+        }
+      );
     } catch (error) {
       console.error('Failed to upload avatar', error);
     }
@@ -106,7 +116,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        'http://localhost:5000/user/resetProgress',
+        'https://diplom-backend-mh1r.onrender.com/user/resetProgress',
         { textbookId: bookId },
         {
           headers: { Authorization: token },
@@ -128,7 +138,7 @@ const Profile = () => {
             <div className="profile_up">
               {user.avatar ? (
                 <img
-                  src={`http://localhost:5000/${user.avatar}`}
+                  src={`https://diplom-backend-mh1r.onrender.com/${user.avatar}`}
                   alt="Avatar"
                   className="profile_circle"
                 />
@@ -213,7 +223,7 @@ const Profile = () => {
                     <p className="books_block_desc">{book.description}</p>
                   </div>
                   <img
-                    src={`http://localhost:5000/${book.avatar}`}
+                    src={`https://diplom-backend-mh1r.onrender.com/${book.avatar}`}
                     alt={book.title}
                     className="books_block_img"
                   />
@@ -245,7 +255,7 @@ const Profile = () => {
                     <StarRating textbookId={book.id} />
                   </div>
                   <img
-                    src={`http://localhost:5000/${book.avatar}`}
+                    src={`https://diplom-backend-mh1r.onrender.com/${book.avatar}`}
                     alt={book.title}
                     className="books_block_img"
                   />

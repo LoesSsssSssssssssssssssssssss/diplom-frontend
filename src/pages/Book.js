@@ -15,9 +15,12 @@ const Book = () => {
     const fetchUserId = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/user/profile', {
-          headers: { Authorization: token },
-        });
+        const response = await axios.get(
+          'https://diplom-backend-mh1r.onrender.com/user/profile',
+          {
+            headers: { Authorization: token },
+          }
+        );
         setUserId(response.data._id);
       } catch (error) {
         console.error('Failed to fetch user ID:', error);
@@ -30,10 +33,12 @@ const Book = () => {
     const fetchTextbookAndProgress = async () => {
       try {
         const [textbookResponse, progressResponse] = await Promise.all([
-          axios.get(`http://localhost:5000/textbooks/books/${id}`),
+          axios.get(
+            `https://diplom-backend-mh1r.onrender.com/textbooks/books/${id}`
+          ),
           userId
             ? axios.get(
-                `http://localhost:5000/user/progressbook/${userId}/${id}`
+                `https://diplom-backend-mh1r.onrender.com/user/progressbook/${userId}/${id}`
               )
             : null,
         ]);
@@ -54,7 +59,7 @@ const Book = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/user/increaseProgress/${userId}/${id}`,
+        `https://diplom-backend-mh1r.onrender.com/user/increaseProgress/${userId}/${id}`,
         { userId, textbookId, topicId },
         { headers: { Authorization: token } }
       );
