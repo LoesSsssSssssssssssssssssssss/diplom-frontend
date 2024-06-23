@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
@@ -15,79 +15,63 @@ const Book = () => {
     const fetchUserId = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(
-          'https://diplom-backend-mh1r.onrender.com/user/profile',
-          {
-            headers: { Authorization: token },
-          }
-        );
-        const userId = response.data._id;
-        setUserId(userId);
+        const response = await axios.get('http://localhost:5000/user/profile', {
+          headers: { Authorization: token },
+        });
+        setUserId(response.data._id);
       } catch (error) {
-        console.error(error);
+        console.error('Failed to fetch user ID:', error);
       }
     };
     fetchUserId();
   }, []);
 
   useEffect(() => {
-    const fetchTopics = async () => {
+    const fetchTextbookAndProgress = async () => {
       try {
-        const response = await axios.get(
-          `https://diplom-backend-mh1r.onrender.com/textbooks/books/${id}`
-        );
-        setTextbooks(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTopics();
-  }, [id]);
+        const [textbookResponse, progressResponse] = await Promise.all([
+          axios.get(`http://localhost:5000/textbooks/books/${id}`),
+          userId
+            ? axios.get(
+                `http://localhost:5000/user/progressbook/${userId}/${id}`
+              )
+            : null,
+        ]);
 
-  useEffect(() => {
-    if (!userId) return;
-    const fetchProgress = async () => {
-      try {
-        const response = await axios.get(
-          `https://diplom-backend-mh1r.onrender.com/user/progressbook/${userId}/${id}`
-        );
-        setProgress(response.data.completedTopics);
+        setTextbooks(textbookResponse.data);
+        if (progressResponse) {
+          setProgress(progressResponse.data.completedTopics);
+        }
       } catch (error) {
-        console.error(error);
+        console.error('Failed to fetch textbook or progress:', error);
       }
     };
-    fetchProgress();
-  }, [userId, id]);
+
+    fetchTextbookAndProgress();
+  }, [id, userId]);
 
   const addToCompletedTopics = async (userId, textbookId, topicId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `https://diplom-backend-mh1r.onrender.com/user/increaseProgress/${userId}/${id}`,
-        {
-          userId,
-          textbookId,
-          topicId,
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
+      await axios.post(
+        `http://localhost:5000/user/increaseProgress/${userId}/${id}`,
+        { userId, textbookId, topicId },
+        { headers: { Authorization: token } }
       );
-      if (response.status === 200) {
-        // Обновите состояние или выполните другие действия при успешном добавлении темы в список пройденных
-      }
     } catch (error) {
-      console.error(error);
-      // Обработка ошибки, если добавление темы в список пройденных не удалось
+      console.error('Failed to add topic to completed topics:', error);
     }
   };
 
-  // Обработчик события для нажатия на тему учебника
   const handleTopicClick = (userId, textbookId, topicId) => {
     addToCompletedTopics(userId, textbookId, topicId);
   };
+
+  const textbookTitle = useMemo(() => textbooks.title, [textbooks.title]);
+  const textbookTopics = useMemo(
+    () => textbooks.topics || [],
+    [textbooks.topics]
+  );
 
   return (
     <>
@@ -95,25 +79,19 @@ const Book = () => {
       <div className="container">
         <div className="wrapper">
           <HeaderPhone />
-          <div className="title">{textbooks.title}</div>
+          <div className="title">{textbookTitle}</div>
           <div className="progress_row">
             <div className="progress">
               <div className="progress_title">Прогресс</div>
-              {Array.isArray(textbooks.topics) &&
-                textbooks.topics.length > 0 && (
-                  <progress
-                    max={textbooks.topics.length}
-                    value={progress.length}
-                  ></progress>
-                )}
-              {/* Используем общее количество тем */}
+              {textbookTopics.length > 0 && (
+                <progress
+                  max={textbookTopics.length}
+                  value={progress.length}
+                ></progress>
+              )}
               <div className="progress_span">
                 <span>{progress.length}</span>
-                <span>
-                  {Array.isArray(textbooks.topics)
-                    ? textbooks.topics.length
-                    : 0}
-                </span>
+                <span>{textbookTopics.length}</span>
               </div>
             </div>
             <button className="test_btn">Пройти тест</button>
@@ -122,25 +100,23 @@ const Book = () => {
             <h2>Содержание</h2>
             <div className="insert_column">
               <ol className="content_list">
-                {textbooks &&
-                  textbooks.topics &&
-                  textbooks.topics.map((topic, index) => (
-                    <li key={index} className="content_item">
-                      <Link
-                        to={`/textbooks/books/${textbooks._id}/topics/${index}`}
-                        onClick={() =>
-                          handleTopicClick(userId, textbooks._id, topic._id)
-                        }
-                        style={{
-                          color: progress.includes(topic._id)
-                            ? 'purple'
-                            : 'inherit',
-                        }}
-                      >
-                        {topic.title}
-                      </Link>
-                    </li>
-                  ))}
+                {textbookTopics.map((topic, index) => (
+                  <li key={index} className="content_item">
+                    <Link
+                      to={`/textbooks/books/${textbooks._id}/topics/${index}`}
+                      onClick={() =>
+                        handleTopicClick(userId, textbooks._id, topic._id)
+                      }
+                      style={{
+                        color: progress.includes(topic._id)
+                          ? 'purple'
+                          : 'inherit',
+                      }}
+                    >
+                      {topic.title}
+                    </Link>
+                  </li>
+                ))}
               </ol>
             </div>
           </div>

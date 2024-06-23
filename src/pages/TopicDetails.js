@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import HeaderPhone from '../components/HeaderPhone';
 import Footer from '../components/Footer';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 function TopicDetails() {
   const navigate = useNavigate();
@@ -16,88 +17,87 @@ function TopicDetails() {
   const [textbooks, setTextbooks] = useState([]);
   const [copiedIndex, setCopiedIndex] = useState(null);
 
-  useEffect(() => {
-    const fetchUserId = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(
-          'https://diplom-backend-mh1r.onrender.com/user/profile',
-          {
-            headers: { Authorization: token },
-          }
-        );
-        const userId = response.data._id;
-        setUserId(userId);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUserId();
+  const fetchUserId = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/user/profile', {
+        headers: { Authorization: token },
+      });
+      const userId = response.data._id;
+      setUserId(userId);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
-  useEffect(() => {
-    const fetchTextbook = async () => {
-      try {
-        const response = await axios.get(
-          `https://diplom-backend-mh1r.onrender.com/textbooks/books/${textbookId}`
-        );
-        setTextbooks(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTextbook();
+  const fetchTextbook = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/textbooks/books/${textbookId}`
+      );
+      setTextbooks(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }, [textbookId]);
 
-  useEffect(() => {
-    const fetchTopic = async () => {
-      if (!textbookId || !topicIndex) {
-        return;
-      }
+  const fetchTopic = useCallback(async () => {
+    if (!textbookId || !topicIndex) {
+      return;
+    }
 
-      try {
-        const response = await axios.get(
-          `https://diplom-backend-mh1r.onrender.com/textbooks/books/${textbookId}/topics/${topicIndex}`
-        );
-        setTopic(response.data);
-      } catch (error) {
-        console.error(error);
-        setMessage('Failed to fetch topic details');
-      }
-    };
-
-    fetchTopic();
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/textbooks/books/${textbookId}/topics/${topicIndex}`
+      );
+      setTopic(response.data);
+    } catch (error) {
+      console.error(error);
+      setMessage('Failed to fetch topic details');
+    }
   }, [textbookId, topicIndex]);
 
-  useEffect(() => {
-    const addToCompletedTopics = async () => {
-      if (userId === 0) {
-        return;
-      }
+  const addToCompletedTopics = useCallback(async () => {
+    if (userId === 0 || !topic) {
+      return;
+    }
 
-      try {
-        const token = localStorage.getItem('token');
-        const topicId = topic._id;
-        await axios.post(
-          `https://diplom-backend-mh1r.onrender.com/user/increaseProgress/${userId}/${textbookId}`,
-          {
-            userId,
-            textbookId,
-            topicId,
+    try {
+      const token = localStorage.getItem('token');
+      const topicId = topic._id;
+      await axios.post(
+        `http://localhost:5000/user/increaseProgress/${userId}/${textbookId}`,
+        {
+          userId,
+          textbookId,
+          topicId,
+        },
+        {
+          headers: {
+            Authorization: token,
           },
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    addToCompletedTopics();
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }, [userId, topic, textbookId]);
+
+  useEffect(() => {
+    fetchUserId();
+  }, [fetchUserId]);
+
+  useEffect(() => {
+    fetchTextbook();
+  }, [fetchTextbook]);
+
+  useEffect(() => {
+    fetchTopic();
+  }, [fetchTopic]);
+
+  useEffect(() => {
+    addToCompletedTopics();
+  }, [addToCompletedTopics]);
 
   const renderContentWithCodeHighlighting = (content) => {
     const parts = content.split(
@@ -216,6 +216,7 @@ function TopicDetails() {
       <div className="container">
         <div className="wrapper">
           <HeaderPhone />
+          <Breadcrumbs />
           <h1 className="title">{topic.title}</h1>
           <div className="book_text">
             {renderContentWithCodeHighlighting(topic.content)}

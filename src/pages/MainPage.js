@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../App.css';
 import Modal from '../components/Modal';
 import Footer from '../components/Footer';
@@ -7,43 +7,101 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ImExit } from 'react-icons/im';
 
+const UserInfo = React.memo(({ loggedInUsername, avatar, logout }) => (
+  <div className="user-info">
+    {avatar ? (
+      <Link to="/profile">
+        <img
+          src={`http://localhost:5000/${avatar}`}
+          alt="Avatar"
+          className="user_avatar"
+        />
+      </Link>
+    ) : (
+      <div className="user_avatar_none" />
+    )}
+    <Link to="/profile" className="username">
+      {loggedInUsername}
+    </Link>
+    <div className="logout-icon" onClick={logout}>
+      <ImExit />
+    </div>
+  </div>
+));
+
+const AccordionItem = React.memo(
+  ({ item, index, activeIndex, toggleAccordion }) => (
+    <div className="accordion_question" key={index}>
+      <div
+        className="accord_question_header"
+        onClick={() => toggleAccordion(index)}
+      >
+        <p>{item.question}</p>
+        <div className="accordion_toggle">
+          <span className="plus"></span>
+          <span
+            className={`plus ${activeIndex === index ? '' : 'rotate90'}`}
+          ></span>
+        </div>
+      </div>
+      <div
+        className={`accordion_question_answer ${
+          activeIndex === index ? 'max_height' : ''
+        }`}
+      >
+        <p>{item.answer}</p>
+      </div>
+    </div>
+  )
+);
+
+const Accordion = React.memo(({ data, activeIndex, toggleAccordion }) => (
+  <div className="accordion">
+    {data.map((item, index) => (
+      <AccordionItem
+        key={index}
+        item={item}
+        index={index}
+        activeIndex={activeIndex}
+        toggleAccordion={toggleAccordion}
+      />
+    ))}
+  </div>
+));
+
 function MainPage() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [avatar, setAvatar] = useState('');
-
-  const toggleAccordion = (index) => {
-    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
-
   const [loggedInUsername, setLoggedInUsername] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleLoginSuccess = (username) => {
+  const toggleAccordion = useCallback((index) => {
+    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+  }, []);
+
+  const handleLoginSuccess = useCallback((username) => {
     setLoggedInUsername(username);
-  };
+  }, []);
 
-  const handleAvatarSet = (avatar) => {
+  const handleAvatarSet = useCallback((avatar) => {
     setAvatar(avatar);
-  };
+  }, []);
 
-  const fetchUsername = async (userId) => {
+  const fetchUsername = useCallback(async (userId) => {
     try {
-      const response = await axios.get(
-        `https://diplom-backend-mh1r.onrender.com/user/${userId}`
-      );
+      const response = await axios.get(`http://localhost:5000/user/${userId}`);
       setLoggedInUsername(response.data.username);
       setAvatar(response.data.avatar || '');
     } catch (error) {
       console.error('Error fetching username:', error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-
         if (payload.userId) {
           fetchUsername(payload.userId);
         }
@@ -51,36 +109,21 @@ function MainPage() {
         console.error('Error parsing token:', error);
       }
     }
-  }, [message]); // Обновляем при изменении message
+  }, [fetchUsername, message]);
 
-  const logout = () => {
-    localStorage.removeItem('token'); // Удаляем токен из локального хранилища
+  const logout = useCallback(() => {
+    localStorage.removeItem('token');
     setMessage('Logged out');
     setLoggedInUsername('');
-  };
+  }, []);
 
   const accordionData = [
-    {
-      question: 'Подойдет ли учебник, если я уже не новичок?',
-      answer:
-        'Да, учебник расчитан на людей с различной степенью знаний в том или ином языке web-разработки, даже опытный разработчик подчеркнет для себя что-нибудь интересное, век живи - век учись.',
-    },
-    {
-      question: 'Что будет после прохождения учебника?',
-      answer:
-        'После того как вы пройдете один из учебников, в конце у вас появится возможность проверить свои знания и пройти тест.',
-    },
-    {
-      question: 'Актуальна ли информация?',
-      answer:
-        'Да, так как это онлайн учебник, в отличии от бумажных аналогов он постоянно обновляется и следует современным тенденциям web-разработки.',
-    },
-    {
-      question: 'Подойдет ли учебник новичку?',
-      answer:
-        'Да, учебник расчитан на людей любого уровня знания в программировании, в первую очередь на новичков, желающих обучиться web-разработке.',
-    },
+    { question: 'Подойдет ли учебник, если я уже не новичок?', answer: '...' },
+    { question: 'Что будет после прохождения учебника?', answer: '...' },
+    { question: 'Актуальна ли информация?', answer: '...' },
+    { question: 'Подойдет ли учебник новичку?', answer: '...' },
   ];
+
   return (
     <>
       <div className="header_visible">
@@ -89,25 +132,11 @@ function MainPage() {
             <img src="/img/logo.png" alt="" className="logo" />
           </Link>
           {loggedInUsername ? (
-            <div className="user-info">
-              {avatar ? (
-                <Link to="/profile">
-                  <img
-                    src={`https://diplom-backend-mh1r.onrender.com/${avatar}`}
-                    alt="Avatar"
-                    className="user_avatar"
-                  />
-                </Link>
-              ) : (
-                <div className="user_avatar_none" />
-              )}
-              <Link to="/profile" className="username">
-                {loggedInUsername}
-              </Link>
-              <div className="logout-icon" onClick={logout}>
-                <ImExit />
-              </div>
-            </div>
+            <UserInfo
+              loggedInUsername={loggedInUsername}
+              avatar={avatar}
+              logout={logout}
+            />
           ) : (
             <Modal
               onLoginSuccess={handleLoginSuccess}
@@ -140,27 +169,12 @@ function MainPage() {
               Учебники
             </Link>
           </div>
-
           {loggedInUsername ? (
-            <div className="user-info">
-              {avatar ? (
-                <Link to="/profile">
-                  <img
-                    src={`https://diplom-backend-mh1r.onrender.com/${avatar}`}
-                    alt="Avatar"
-                    className="user_avatar"
-                  />
-                </Link>
-              ) : (
-                <div className="user_avatar_none" />
-              )}
-              <Link to="/profile" className="username">
-                {loggedInUsername}
-              </Link>
-              <div className="logout-icon" onClick={logout}>
-                <ImExit />
-              </div>
-            </div>
+            <UserInfo
+              loggedInUsername={loggedInUsername}
+              avatar={avatar}
+              logout={logout}
+            />
           ) : (
             <Modal
               onLoginSuccess={handleLoginSuccess}
@@ -293,40 +307,17 @@ function MainPage() {
         <div className="wrapper">
           <div className="invite" id="faq">
             <p>
-              Готовы начать свое обучение <br />
-              уже сегодня?
+              Готовы начать свое обучение <br /> уже сегодня?
             </p>
             <button>
               <Link to="/bookspage">Начать сейчас</Link>
             </button>
           </div>
-          <div className="accordion">
-            {accordionData.map((item, index) => (
-              <div className="accordion_question" key={index}>
-                <div
-                  className="accord_question_header"
-                  onClick={() => toggleAccordion(index)}
-                >
-                  <p>{item.question}</p>
-                  <div className="accordion_toggle">
-                    <span className="plus"></span>
-                    <span
-                      className={`plus ${
-                        activeIndex === index ? '' : 'rotate90'
-                      }`}
-                    ></span>
-                  </div>
-                </div>
-                <div
-                  className={`accordion_question_answer ${
-                    activeIndex === index ? 'max_height' : ''
-                  }`}
-                >
-                  <p>{item.answer}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Accordion
+            data={accordionData}
+            activeIndex={activeIndex}
+            toggleAccordion={toggleAccordion}
+          />
           <div className="contact">
             <p>
               Присоединяйтесь <br />к нам

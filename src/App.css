@@ -858,6 +858,7 @@ h2 {
   display: flex;
   margin-top: 5%;
   gap: 14px;
+  flex-wrap: wrap;
 }
 
 .books_block {
@@ -1188,6 +1189,30 @@ li > a {
 button > a {
   text-decoration: none;
   color: white;
+}
+
+.checkbox_wrapper {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 1.5em;
+  color: grey;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.modal_checkbox {
+  margin-right: 10px;
+}
+
+.modal_checkbox_label {
+  font-size: 14px;
 }
 
 p > a {

@@ -39,6 +39,7 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [message, setMessage] = useState('');
 
   const validateEmail = (email) => {
@@ -79,16 +80,18 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
       return;
     }
 
+    if (!agreeToTerms) {
+      setMessage('Вы должны согласиться на обработку персональных данных');
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        'https://diplom-backend-mh1r.onrender.com/user/register',
-        {
-          username,
-          password,
-          email,
-          role: 'user',
-        }
-      );
+      const response = await axios.post('http://localhost:5000/user/register', {
+        username,
+        password,
+        email,
+        role: 'user',
+      });
       setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response.data.error);
@@ -97,13 +100,10 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
 
   const login = async () => {
     try {
-      const response = await axios.post(
-        'https://diplom-backend-mh1r.onrender.com/user/login',
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post('http://localhost:5000/user/login', {
+        email,
+        password,
+      });
       setMessage(`Logged in! Token: ${response.data.token}`);
       const token = response.data.token;
       const name = response.data.username;
@@ -170,6 +170,21 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
+                  <div className="checkbox_wrapper">
+                    <input
+                      type="checkbox"
+                      id="agreeToTerms"
+                      className="modal_checkbox"
+                      checked={agreeToTerms}
+                      onChange={(e) => setAgreeToTerms(e.target.checked)}
+                    />
+                    <label
+                      htmlFor="agreeToTerms"
+                      className="modal_checkbox_label"
+                    >
+                      Даю согласие на обработку персональных данных
+                    </label>
+                  </div>
                   <button className="profile_book_btn" onClick={register}>
                     Продолжить
                   </button>
@@ -210,7 +225,6 @@ const Modal = ({ children, onLoginSuccess, handleAvatarSet }) => {
                     Продолжить
                   </button>
                   <div className="auth">
-                    <p style={{ cursor: 'pointer' }}>Забыли пароль?</p>
                     <p>Нет аккаунта?</p>
                     <button className="svap2" onClick={handleSwitchMode}>
                       Регистрация

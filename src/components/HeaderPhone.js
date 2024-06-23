@@ -25,9 +25,7 @@ const HeaderPhone = () => {
 
   const fetchUserData = async (userId) => {
     try {
-      const response = await axios.get(
-        `https://diplom-backend-mh1r.onrender.com/user/${userId}`
-      );
+      const response = await axios.get(`http://localhost:5000/user/${userId}`);
       setLoggedInUsername(response.data.username);
       setAvatar(response.data.avatar || '');
     } catch (error) {
@@ -90,7 +88,7 @@ const HeaderPhone = () => {
                     {avatar ? (
                       <Link to="/profile">
                         <img
-                          src={`https://diplom-backend-mh1r.onrender.com/${avatar}`}
+                          src={`http://localhost:5000/${avatar}`}
                           alt="Avatar"
                           className="user_avatar"
                           key={avatar}
