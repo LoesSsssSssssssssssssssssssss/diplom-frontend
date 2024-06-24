@@ -2142,6 +2142,10 @@ p > a {
     font-size: 12px;
   }
 
+  .language-html > span {
+    font-size: 12px;
+  }
+
   .code-block > span {
     font-size: 12px;
   }
