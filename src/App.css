@@ -1492,6 +1492,7 @@ p > a {
 
   .books_block {
     width: 375px;
+    height: fit-content;
   }
 
   .books_row {
@@ -1593,6 +1594,7 @@ p > a {
 
   .books_block {
     width: 375px;
+    height: fit-content;
   }
 
   .books_row {
@@ -1770,6 +1772,7 @@ p > a {
 
   .books_block {
     width: 375px;
+    height: fit-content;
   }
 
   .books_row {
@@ -2044,6 +2047,7 @@ p > a {
   .books_block {
     width: 350px;
     padding: 5%;
+    height: fit-content;
   }
 
   .books_block_img {
