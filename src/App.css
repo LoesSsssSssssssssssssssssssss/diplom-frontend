@@ -1466,6 +1466,8 @@ p > a {
   align-items: center;
   background-color: white;
   border: none;
+  color: #361efd;
+  border-radius: 50%;
 }
 
 @media (min-width: 1200px) and (max-width: 1650px) {
