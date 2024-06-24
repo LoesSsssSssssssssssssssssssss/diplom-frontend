@@ -2138,6 +2138,10 @@ p > a {
     color: #000;
   }
 
+  .language-html {
+    font-size: 12px;
+  }
+
   .code-block > span {
     font-size: 12px;
   }
