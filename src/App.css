@@ -2137,4 +2137,8 @@ p > a {
     font-family: 'Manrope regular';
     color: #000;
   }
+
+  .code-block > span {
+    font-size: 12px;
+  }
 }
