@@ -598,42 +598,9 @@ function AdminPanel() {
                   </div>
                 </TabPanel>
                 <TabPanel>
-                  <div>
-                    <h3>Добавить новую категорию</h3>
-                    <form onSubmit={handleSubmitCategory}>
-                      <div>
-                        <label>Название:</label>
-                        <input
-                          type="text"
-                          value={categoryName}
-                          onChange={(e) => setCategoryName(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label>Изображение:</label>
-                        <input
-                          type="file"
-                          onChange={(e) => setCategoryImage(e.target.files[0])}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label>Описание:</label>
-                        <textarea
-                          className="limited-textarea"
-                          value={categoryDescription}
-                          onChange={(e) =>
-                            setCategoryDescription(e.target.value)
-                          }
-                          required
-                        ></textarea>
-                      </div>
-                      <button type="submit">Добавить категорию</button>
-                    </form>
+                  <>
                     <CategoryManagement />
-                    <div className="message">{message}</div>
-                  </div>
+                  </>
                 </TabPanel>
                 <TabPanel>
                   <div>
