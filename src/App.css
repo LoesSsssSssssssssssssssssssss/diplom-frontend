@@ -1770,6 +1770,12 @@ p > a {
     margin-left: 5%;
   }
 
+  .books_name_row > h2 {
+    font-size: 24px;
+    font-family: 'Manrope regular';
+    color: #000;
+  }
+
   .books_block {
     width: 375px;
     height: fit-content;
@@ -2124,5 +2130,11 @@ p > a {
     color: #6c09f5;
     width: 55px;
     height: 40px;
+  }
+
+  .books_name_row > h2 {
+    font-size: 20px;
+    font-family: 'Manrope regular';
+    color: #000;
   }
 }
