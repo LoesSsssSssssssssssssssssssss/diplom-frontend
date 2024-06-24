@@ -18,9 +18,6 @@ function AdminPanel() {
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
   const [users, setUsers] = useState([]);
-  const [categoryName, setCategoryName] = useState('');
-  const [categoryImage, setCategoryImage] = useState(null);
-  const [categoryDescription, setCategoryDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [email, setEmail] = useState('');
@@ -108,34 +105,6 @@ function AdminPanel() {
     setToken('');
     setIsAdmin(false);
     setMessage('Logged out');
-  };
-
-  const handleSubmitCategory = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append('name', categoryName);
-      formData.append('description', categoryDescription);
-      formData.append('image', categoryImage);
-
-      const response = await axios.post(
-        'https://diplom-backend-mh1r.onrender.com/admin/categories',
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      console.log(response.data);
-      setMessage(response.data.message);
-      setCategoryName('');
-      setCategoryImage(null);
-      setCategoryDescription('');
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handleChangeRole = async (id, newRole) => {
