@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import HeaderPhone from '../components/HeaderPhone';
 import Footer from '../components/Footer';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 const Book = () => {
   const { id } = useParams();
@@ -84,6 +85,7 @@ const Book = () => {
       <div className="container">
         <div className="wrapper">
           <HeaderPhone />
+          <Breadcrumbs />
           <div className="title">{textbookTitle}</div>
           <div className="progress_row">
             <div className="progress">
