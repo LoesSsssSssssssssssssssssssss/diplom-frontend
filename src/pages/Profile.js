@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import HeaderPhone from '../components/HeaderPhone';
 import Footer from '../components/Footer';
 import StarRating from '../components/StarRating';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -230,7 +231,7 @@ const Profile = () => {
                 </div>
                 <div className="books_block_down">
                   <button className="profile_book_btn">
-                    <a href={`/book/${book.id}`}>Продолжить</a>
+                    <Link to={`/book/${book.id}`}>Продолжить</Link>
                   </button>
                   <div className="books_block_item">
                     <progress
@@ -262,12 +263,12 @@ const Profile = () => {
                 </div>
                 <div className="books_block_down">
                   <button className="profile_book_btn">
-                    <a
-                      href={`/book/${book.id}`}
+                    <Link
+                      to={`/book/${book.id}`}
                       onClick={() => resetProgress(book.id)}
                     >
                       Еще раз
-                    </a>
+                    </Link>
                   </button>
                   <div className="books_block_item">
                     <progress
