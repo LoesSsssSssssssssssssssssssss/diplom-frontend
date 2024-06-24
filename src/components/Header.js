@@ -30,7 +30,7 @@ const Header = () => {
 
   useEffect(() => {
     if (token) {
-      fetchCategories();
+      checkUserRole();
     }
   }, [token, checkUserRole]);
 
