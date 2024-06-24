@@ -170,10 +170,16 @@ function CategoryManagement() {
                   alt={category.name}
                   width="100"
                 />
-                <button onClick={() => handleEditCategory(category)}>
+                <button
+                  className="category-set-button"
+                  onClick={() => handleEditCategory(category)}
+                >
                   Редактировать
                 </button>
-                <button onClick={() => handleDeleteCategory(category._id)}>
+                <button
+                  className="category-delete-button"
+                  onClick={() => handleDeleteCategory(category._id)}
+                >
                   Удалить
                 </button>
               </li>

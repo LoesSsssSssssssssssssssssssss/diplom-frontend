@@ -354,6 +354,34 @@ ul {
   transition: background-color 0.3s;
 }
 
+.category-set-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-set-button:hover {
+  background-color: #0056b3;
+}
+
+.category-delete-button {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-delete-button:hover {
+  background-color: #c82333;
+}
+
 .book_block button:hover {
   background-color: #0056b3;
 }
