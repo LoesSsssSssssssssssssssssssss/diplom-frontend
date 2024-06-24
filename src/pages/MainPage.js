@@ -85,6 +85,15 @@ function MainPage() {
     }
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const toggleAccordion = useCallback((index) => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   }, []);
