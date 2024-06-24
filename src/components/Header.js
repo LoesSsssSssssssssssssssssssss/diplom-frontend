@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Modal from '../components/Modal';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -30,8 +30,6 @@ const Header = () => {
 
   useEffect(() => {
     if (token) {
-      checkUserRole();
-      fetchUsers();
       fetchCategories();
     }
   }, [token, checkUserRole]);
