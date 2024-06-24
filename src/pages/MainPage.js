@@ -6,6 +6,7 @@ import HeaderPhone from '../components/HeaderPhone';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ImExit } from 'react-icons/im';
+import { IoArrowUpCircleOutline } from 'react-icons/io5';
 
 const UserInfo = React.memo(({ loggedInUsername, avatar, logout }) => (
   <div className="user-info">
@@ -74,6 +75,15 @@ function MainPage() {
   const [avatar, setAvatar] = useState('');
   const [loggedInUsername, setLoggedInUsername] = useState('');
   const [message, setMessage] = useState('');
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    if (window.scrollY > 200) {
+      setShowScrollButton(true);
+    } else {
+      setShowScrollButton(false);
+    }
+  }, []);
 
   const toggleAccordion = useCallback((index) => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -356,6 +366,11 @@ function MainPage() {
           <Footer />
         </div>
       </div>
+      {showScrollButton && (
+        <button className="scroll-to-top" onClick={scrollToTop}>
+          <IoArrowUpCircleOutline />
+        </button>
+      )}
     </>
   );
 }

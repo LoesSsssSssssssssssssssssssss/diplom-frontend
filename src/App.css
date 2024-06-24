@@ -1455,6 +1455,17 @@ p > a {
   margin-top: 0;
 }
 
+.scroll-to-top {
+  font-size: 20px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 1200px) and (max-width: 1650px) {
   .hello {
     top: 20%;
