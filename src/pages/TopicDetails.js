@@ -104,12 +104,14 @@ function TopicDetails() {
 
   const renderContentWithCodeHighlighting = (content) => {
     const parts = content.split(
-      /(\{code\}.*?\{\/code\}|\{info\}.*?\{\/info\}|\{warn\}.*?\{\/warn\}|\{subtitle\}.*?\{\/subtitle\})/gs
+      /(\{code\s+lang=[a-zA-Z]+\}[\s\S]*?\{\/code\}|\{info\}[\s\S]*?\{\/info\}|\{warn\}[\s\S]*?\{\/warn\}|\{subtitle\}[\s\S]*?\{\/subtitle\})/g
     );
 
     return parts.map((part, index) => {
-      if (part.startsWith('{code}') && part.endsWith('{/code}')) {
-        const codeContent = part.slice(6, -7).trim();
+      if (/^\{code\s+lang=[a-zA-Z]+\}/.test(part) && part.endsWith('{/code}')) {
+        const lang = part.match(/lang=([a-zA-Z]+)/)[1];
+        const codeContent = part.slice(part.indexOf('}') + 1, -7).trim();
+
         return (
           <div key={index} className="code-block">
             <button
@@ -119,7 +121,7 @@ function TopicDetails() {
               {copiedIndex === index ? 'Скопировано!' : 'Копировать код'}
             </button>
             <SyntaxHighlighter
-              language="javascript"
+              language={lang}
               style={materialDark}
               showLineNumbers
             >
