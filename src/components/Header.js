@@ -8,11 +8,39 @@ const Header = () => {
   const [loggedInUsername, setLoggedInUsername] = useState('');
   const [checkedAuthStatus, setCheckedAuthStatus] = useState(false);
   const [avatar, setAvatar] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const token = localStorage.getItem('token');
+
+  const checkUserRole = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        'https://diplom-backend-mh1r.onrender.com/admin/check-role',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsAdmin(response.data.isAdmin);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      checkUserRole();
+      fetchUsers();
+      fetchCategories();
+    }
+  }, [token, checkUserRole]);
 
   const logout = () => {
     localStorage.removeItem('token');
     setLoggedInUsername('');
     setAvatar('');
+    setIsAdmin(false);
   };
 
   const handleLoginSuccess = (username) => {
@@ -78,6 +106,13 @@ const Header = () => {
             <Link to="/bookspage" className="header_a">
               Учебники
             </Link>
+            {isAdmin ? (
+              <Link to="/admin" className="header_a">
+                Админ панель
+              </Link>
+            ) : (
+              ''
+            )}
           </div>
 
           {checkedAuthStatus && (
