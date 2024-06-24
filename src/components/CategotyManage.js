@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 function CategoryManagement() {
@@ -12,14 +12,7 @@ function CategoryManagement() {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    if (token) {
-      checkUserRole();
-      fetchCategories();
-    }
-  }, [token, checkUserRole, fetchCategories]);
-
-  const checkUserRole = async () => {
+  const checkUserRole = useCallback(async () => {
     try {
       const response = await axios.get(
         'https://diplom-backend-mh1r.onrender.com/admin/check-role',
@@ -33,9 +26,9 @@ function CategoryManagement() {
     } catch (error) {
       console.error('Ошибка при проверке роли пользователя:', error);
     }
-  };
+  }, [token]);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const response = await axios.get(
         'https://diplom-backend-mh1r.onrender.com/admin/categories',
@@ -49,7 +42,14 @@ function CategoryManagement() {
     } catch (error) {
       console.error('Ошибка при получении категорий:', error);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      checkUserRole();
+      fetchCategories();
+    }
+  }, [token, checkUserRole, fetchCategories]);
 
   const handleEditCategory = (category) => {
     setEditCategory(category);
