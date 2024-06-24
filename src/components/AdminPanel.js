@@ -10,6 +10,7 @@ import { GrEdit } from 'react-icons/gr';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import CategoryManagement from './CategotyManage';
 
 function AdminPanel() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -630,6 +631,7 @@ function AdminPanel() {
                       </div>
                       <button type="submit">Добавить категорию</button>
                     </form>
+                    <CategoryManagement />
                     <div className="message">{message}</div>
                   </div>
                 </TabPanel>

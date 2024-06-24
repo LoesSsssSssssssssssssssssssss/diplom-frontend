@@ -9,7 +9,8 @@ function CategoryManagement() {
   const [categoryImage, setCategoryImage] = useState(null);
   const [message, setMessage] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
+
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (token) {
