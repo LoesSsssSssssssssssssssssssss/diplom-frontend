@@ -17,7 +17,7 @@ function CategoryManagement() {
       checkUserRole();
       fetchCategories();
     }
-  }, [token]);
+  }, [token, checkUserRole, fetchCategories]);
 
   const checkUserRole = async () => {
     try {
@@ -83,9 +83,8 @@ function CategoryManagement() {
     if (categoryImage) formData.append('image', categoryImage);
 
     try {
-      let response;
       if (editCategory) {
-        response = await axios.put(
+        await axios.put(
           `https://diplom-backend-mh1r.onrender.com/admin/categories/${editCategory._id}`,
           formData,
           {
@@ -97,7 +96,7 @@ function CategoryManagement() {
         );
         setMessage('Категория успешно обновлена');
       } else {
-        response = await axios.post(
+        await axios.post(
           'https://diplom-backend-mh1r.onrender.com/admin/categories',
           formData,
           {
