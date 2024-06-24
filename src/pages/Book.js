@@ -99,7 +99,7 @@ const Book = () => {
                 <span>{textbookTopics.length}</span>
               </div>
             </div>
-            <button className="test_btn">Пройти тест</button>
+            {/* <button className="test_btn">Пройти тест</button> */}
           </div>
           <div className="insert_wrapper">
             <h2>Содержание</h2>
