@@ -203,6 +203,7 @@ function TopicDetails() {
     } else {
       navigate(`/book/${textbookId}`);
     }
+    window.scrollTo(0, 0);
   };
 
   const handleNextClick = () => {
@@ -213,6 +214,7 @@ function TopicDetails() {
     } else {
       navigate(`/book/${textbookId}`);
     }
+    window.scrollTo(0, 0);
   };
 
   return (
